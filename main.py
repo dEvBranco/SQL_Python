@@ -13,11 +13,29 @@ def get_connection(db_name):
 
 
 # Create a table in the database
+def create_table(connection):
+    query = """
+    CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY,
+        name TEXT NOT NULL,
+        age INTEGER,
+        email TEXT UNIQUE
+    );
+    """
+    try:
+        with connection:
+            connection.execute(query)
+        print("Table created successfully")
+    except Exception as e:
+        print(e)
 
 
 # Main Function Wrapper
 def main():
     connection = get_connection("subscribers.db")
+
+    # Create the table
+    create_table(connection)
 
 
 if __name__ == "__main__":
